@@ -1559,8 +1559,7 @@ dependencies = [
 [[package]]
 name = "librespot"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9de5f3110cf89c5b9ac715a895a0b2274d8dc449a93998d548714dae9b7290e"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "base64 0.10.1",
  "env_logger 0.6.2",
@@ -1590,8 +1589,7 @@ dependencies = [
 [[package]]
 name = "librespot-audio"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1bb21228db5a87fdc2774cd4b3fe32e898a4a1f4957c82e9faa196cca71bf839"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "aes-ctr",
  "bit-set",
@@ -1610,8 +1608,7 @@ dependencies = [
 [[package]]
 name = "librespot-connect"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f4bf51df1c33e4faa1cf558b075c175704b53362d90f819ed86e89463c34ed2"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "aes-ctr",
  "base64 0.10.1",
@@ -1638,8 +1635,7 @@ dependencies = [
 [[package]]
 name = "librespot-core"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c8bd9161067ffcae878cd9224562b8c8d0ca254f15db255eabe58df4ba258d0"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "aes 0.3.2",
  "base64 0.10.1",
@@ -1676,8 +1672,7 @@ dependencies = [
 [[package]]
 name = "librespot-metadata"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0553a4be36640aba59cc40ce1f34c87f70203b87209beebebea4c5253c8dba13"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "byteorder",
  "futures 0.1.29",
@@ -1691,8 +1686,7 @@ dependencies = [
 [[package]]
 name = "librespot-playback"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56df0417db5f1b5932c2443d853fd79bdbd509f6dfb399af9c8ce57bb6065c76"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "alsa 0.2.2",
  "byteorder",
@@ -1712,8 +1706,7 @@ dependencies = [
 [[package]]
 name = "librespot-protocol"
 version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "40c202de42b184e368250648602fddacddcc675bb2699aae1b59f07170157e01"
+source = "git+https://github.com/dhenneke/librespot?branch=oauth-token-authentication#63297b9e377ebaa8bdad68457b26d0866aacc7aa"
 dependencies = [
  "glob",
  "protobuf",
@@ -3095,7 +3088,7 @@ checksum = "4bf77cb82ba8453b42b6ae1d692e4cdc92f9a47beaf89a847c8be83f4e328ad3"
 
 [[package]]
 name = "spotifyd"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "alsa 0.3.0",
  "chrono",

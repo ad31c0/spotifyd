@@ -119,10 +119,13 @@ pub(crate) fn initial_state(
         }
     }
 
+    let token = config.token;
+
     let connection = if let Some(credentials) = get_credentials(
         username,
         password,
         cache.as_ref().and_then(Cache::credentials),
+        token,
         |_| {
             error!("No password found.");
             exit(1);
