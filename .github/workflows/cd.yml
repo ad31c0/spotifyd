@@ -160,11 +160,13 @@ jobs:
         run: |
           cd target/${{ matrix.target }}/release
           tar czvf spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.tar.gz spotifyd
-          shasum -a 512 spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.tar.gz > spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.sha512
+          zip spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.zip spotifyd
+          shasum -a 512 spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.tar.gz spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.zip > spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.sha512
       - name: Releasing assets
         uses: softprops/action-gh-release@v1
         with:
           files: |
+            target/${{ matrix.target }}/release/spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.zip
             target/${{ matrix.target }}/release/spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.tar.gz
             target/${{ matrix.target }}/release/spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.sha512
         env:
