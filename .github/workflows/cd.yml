@@ -95,12 +95,16 @@ jobs:
           override: true
       - name: Installing needed macOS dependencies
         if: matrix.os == 'macos-latest'
-        run: brew install awk dbus pkg-config portaudio
+        run: |
+          brew install awk dbus pkg-config portaudio
+          echo "STRIP=strip" >> $GITHUB_ENV
       - name: Installing needed Ubuntu dependencies
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y -qq libasound2-dev libssl-dev libpulse-dev libdbus-1-dev
+          echo "STRIP=strip" >> $GITHUB_ENV
+          echo "STRIP_OPTS=-s" >> $GITHUB_ENV
       - name: Installing needed Ubuntu arm64 dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-arm64'
         run: |
@@ -119,6 +123,8 @@ jobs:
           echo "C_INCLUDE_PATH=/build/sysroot/usr/include" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/build/sysroot/usr/lib/aarch64-linux-gnu" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/aarch64-linux-gnu" >> $GITHUB_ENV
+          echo "STRIP=aarch64-linux-gnu-strip" >> $GITHUB_ENV
+          echo "STRIP_OPTS=-s" >> $GITHUB_ENV
       - name: Installing needed Ubuntu armhf dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armhf'
         run: |
@@ -137,6 +143,8 @@ jobs:
           echo "C_INCLUDE_PATH=/build/sysroot/usr/include" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/build/sysroot/usr/lib/arm-linux-gnueabihf" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/arm-linux-gnueabihf" >> $GITHUB_ENV
+          echo "STRIP=arm-linux-gnueabihf-strip" >> $GITHUB_ENV
+          echo "STRIP_OPTS=-s" >> $GITHUB_ENV
       - name: Installing needed Ubuntu armv6 dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armv6'
         run: |
@@ -157,6 +165,8 @@ jobs:
           echo "C_INCLUDE_PATH=/build/sysroot/usr/include" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/build/sysroot/usr/lib/arm-linux-gnueabihf" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/arm-linux-gnueabihf" >> $GITHUB_ENV
+          echo "STRIP=arm-linux-gnueabihf-strip" >> $GITHUB_ENV
+          echo "STRIP_OPTS=-s" >> $GITHUB_ENV
       - name: Installing needed Ubuntu arm64 dependencies (full)
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-arm64' && matrix.artifact_type != 'slim'
         run: |
@@ -211,6 +221,7 @@ jobs:
         shell: bash
         run: |
           cd target/${{ matrix.target }}/release
+          ${STRIP} ${STRIP_OPTS} spotifyd
           tar czvf spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.tar.gz spotifyd
           zip spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.zip spotifyd
           shasum -a 512 spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.tar.gz spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.zip > spotifyd-${{ matrix.artifact_prefix }}-${{ matrix.artifact_type }}.sha512
