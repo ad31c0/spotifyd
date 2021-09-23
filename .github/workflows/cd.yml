@@ -112,23 +112,24 @@ jobs:
           echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ xenial main" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update
           sudo apt-get install -y -qq gcc-aarch64-linux-gnu libc6-arm64-cross=2.23-0ubuntu3cross1 libc6-dev-arm64-cross
-          sudo apt-get download libasound2:arm64 libasound2-dev:arm64 libssl-dev:arm64 libssl1.0.0:arm64 libpulse0:arm64 libpulse-dev:arm64
+          sudo apt-get download libasound2:arm64 libasound2-dev:arm64 libssl-dev:arm64 libssl1.0.0:arm64 libpulse0:arm64 libpulse-dev:arm64 libjson-c2:arm64 libdbus-1-3:arm64
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
           sudo dpkg -x libasound2-dev*.deb /build/sysroot/
           sudo dpkg -x libpulse-dev*.deb /build/sysroot/
           sudo dpkg -x libpulse0_*.deb /build/sysroot/
+          sudo dpkg -x libjson-c2*.deb /build/sysroot/
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abc" >> $GITHUB_ENV
-          echo "RUSTFLAGS=-C linker=aarch64-linux-gnu-gcc -L/usr/aarch64-linux-gnu/lib -L/build/sysroot/usr/lib/aarch64-linux-gnu -L/build/sysroot/lib/aarch64-linux-gnu" >> $GITHUB_ENV
+          echo "RUSTFLAGS=-C linker=aarch64-linux-gnu-gcc -L/usr/aarch64-linux-gnu/lib -L/build/sysroot/usr/lib/aarch64-linux-gnu -L/build/sysroot/usr/lib/aarch64-linux-gnu/pulseaudio -L/build/sysroot/lib/aarch64-linux-gnu" >> $GITHUB_ENV
           echo "C_INCLUDE_PATH=/build/sysroot/usr/include" >> $GITHUB_ENV
           echo "OPENSSL_LIB_DIR=/build/sysroot/usr/lib/aarch64-linux-gnu" >> $GITHUB_ENV
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/aarch64-linux-gnu" >> $GITHUB_ENV
           echo "STRIP=aarch64-linux-gnu-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
           sudo mkdir -p /.cargo
-          echo -e '[target.aarch64-unknown-linux-gnu.slim]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
+          echo -e '[target.aarch64-unknown-linux-gnu.slim]\nrustc-link-lib = ["dbus-1", "pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armhf dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armhf'
         run: |
@@ -137,7 +138,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y -qq gcc-arm-linux-gnueabihf libc6-armhf-cross=2.23-0ubuntu3cross1 libc6-dev-armhf-cross
           sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf libpulse0:armhf libpulse-dev:armhf libjson-c2:armhf libdbus-1-3:armhf
-          sudo dpkg -x libdbus-1-3*.deb /build/sysroot/
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
@@ -163,7 +163,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y -qq git
           sudo git -C /build clone --depth=1 https://github.com/raspberrypi/tools.git
-          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf libpulse0:armhf libpulse-dev:armhf
+          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf libpulse0:armhf libpulse-dev:armhf libjson-c2:armhf libdbus-1-3:armhf
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
