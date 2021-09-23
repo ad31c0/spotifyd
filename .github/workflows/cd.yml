@@ -37,10 +37,10 @@ jobs:
             os: ubuntu-16.04
             artifact_prefix: linux-armhf
             target: arm-unknown-linux-gnueabihf
-          - build_target: linux-armv6
-            os: ubuntu-16.04
-            artifact_prefix: linux-armv6
-            target: arm-unknown-linux-gnueabihf
+#          - build_target: linux-armv6
+#            os: ubuntu-16.04
+#            artifact_prefix: linux-armv6
+#            target: arm-unknown-linux-gnueabihf
           - build_target: macos
             artifact_type: slim
             audio_backend: portaudio_backend
@@ -157,6 +157,8 @@ jobs:
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/arm-linux-gnueabihf" >> $GITHUB_ENV
           echo "STRIP=arm-linux-gnueabihf-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
+          sudo mkdir -p /.cargo
+          echo -e '[target.arm-unknown-linux-gnueabihf.slim]\nrustc-link-lib = ["dbus-1", "pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armv6 dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armv6'
         run: |
