@@ -132,8 +132,6 @@ jobs:
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/aarch64-linux-gnu" >> $GITHUB_ENV
           echo "STRIP=aarch64-linux-gnu-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
-          sudo mkdir -p /.cargo
-          echo -e '[target.aarch64-unknown-linux-gnu.slim]\nrustc-link-lib = ["dbus-1", "pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armhf dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armhf'
         run: |
@@ -161,8 +159,6 @@ jobs:
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/arm-linux-gnueabihf" >> $GITHUB_ENV
           echo "STRIP=arm-linux-gnueabihf-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
-          sudo mkdir -p /.cargo
-          echo -e '[target.arm-unknown-linux-gnueabihf.slim]\nrustc-link-lib = ["dbus-1", "pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armv6 dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armv6'
         run: |
