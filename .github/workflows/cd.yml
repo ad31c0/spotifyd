@@ -37,10 +37,10 @@ jobs:
             os: ubuntu-16.04
             artifact_prefix: linux-armhf
             target: arm-unknown-linux-gnueabihf
-          - build_target: linux-armv6
-            os: ubuntu-16.04
-            artifact_prefix: linux-armv6
-            target: arm-unknown-linux-gnueabihf
+#          - build_target: linux-armv6
+#            os: ubuntu-16.04
+#            artifact_prefix: linux-armv6
+#            target: arm-unknown-linux-gnueabihf
           - build_target: macos
             artifact_type: slim
             audio_backend: portaudio_backend
@@ -53,9 +53,9 @@ jobs:
           - build_target: linux-armhf
             artifact_type: slim
             audio_backend: alsa_backend,pulseaudio_backend
-          - build_target: linux-armv6
-            artifact_type: slim
-            audio_backend: alsa_backend,pulseaudio_backend
+#          - build_target: linux-armv6
+#            artifact_type: slim
+#            audio_backend: alsa_backend
 #          - build_target: macos
 #            artifact_type: default
 #            audio_backend: portaudio_backend
@@ -121,6 +121,9 @@ jobs:
           sudo dpkg -x libpulse-dev*.deb /build/sysroot/
           sudo dpkg -x libpulse0_*.deb /build/sysroot/
           sudo dpkg -x libjson-c2*.deb /build/sysroot/
+          find /build/sysroot/
+          sudo cp -r /build/sysroot/lib/* /build/sysroot/usr/lib/
+          sudo ln -frs /build/sysroot/lib/aarch64-linux-gnu/libdbus-1.so.3 /build/sysroot/lib/aarch64-linux-gnu/libdbus-1.so
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abc" >> $GITHUB_ENV
           echo "RUSTFLAGS=-C linker=aarch64-linux-gnu-gcc -L/usr/aarch64-linux-gnu/lib -L/build/sysroot/usr/lib/aarch64-linux-gnu -L/build/sysroot/usr/lib/aarch64-linux-gnu/pulseaudio -L/build/sysroot/lib/aarch64-linux-gnu" >> $GITHUB_ENV
@@ -147,6 +150,9 @@ jobs:
           sudo dpkg -x libpulse-dev*.deb /build/sysroot/
           sudo dpkg -x libpulse0_*.deb /build/sysroot/
           sudo dpkg -x libjson-c2*.deb /build/sysroot/
+          find /build/sysroot/
+          sudo cp -r /build/sysroot/lib/* /build/sysroot/usr/lib/
+          sudo ln -frs /build/sysroot/lib/aarch64-linux-gnu/libdbus-1.so.3 /build/sysroot/lib/aarch64-linux-gnu/libdbus-1.so
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abc" >> $GITHUB_ENV
           echo "RUSTFLAGS=-C linker=arm-linux-gnueabihf-gcc -L/usr/arm-linux-gnueabihf/lib -L/build/sysroot/usr/lib/arm-linux-gnueabihf -L/build/sysroot/usr/lib/arm-linux-gnueabihf/pulseaudio -L/build/sysroot/lib/arm-linux-gnueabihf" >> $GITHUB_ENV
@@ -165,15 +171,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y -qq git
           sudo git -C /build clone --depth=1 https://github.com/raspberrypi/tools.git
-          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf libpulse0:armhf libpulse-dev:armhf libdbus-1-3:armhf libjson-c2:armhf
-          sudo dpkg -x libdbus-1-3*.deb /build/sysroot/
+          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
           sudo dpkg -x libasound2-dev*.deb /build/sysroot/
-          sudo dpkg -x libpulse-dev*.deb /build/sysroot/
-          sudo dpkg -x libpulse0_*.deb /build/sysroot/
-          sudo dpkg -x libjson-c2*.deb /build/sysroot/
+          find /build/sysroot/
           echo "/build/tools/arm-bcm2708/arm-linux-gnueabihf/bin" >> $GITHUB_PATH
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abcd" >> $GITHUB_ENV
