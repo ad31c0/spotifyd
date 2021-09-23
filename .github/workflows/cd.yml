@@ -152,7 +152,7 @@ jobs:
           echo "STRIP=arm-linux-gnueabihf-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
           sudo mkdir -p /.cargo
-          echo -e '[target.arm-unknown-linux-gnueabihf]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
+          echo -e '[target.arm-unknown-linux-gnueabihf.slim]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armv6 dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armv6'
         run: |
@@ -178,7 +178,7 @@ jobs:
           echo "STRIP=arm-linux-gnueabihf-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
           sudo mkdir -p /.cargo
-          echo -e '[target.arm-unknown-linux-gnueabihf]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
+          echo -e '[target.arm-unknown-linux-gnueabihf.slim]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu arm64 dependencies (full)
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-arm64' && matrix.artifact_type != 'slim'
         run: |
