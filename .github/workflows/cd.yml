@@ -46,16 +46,16 @@ jobs:
             audio_backend: portaudio_backend
           - build_target: linux
             artifact_type: slim
-            audio_backend: pulseaudio_backend
+            audio_backend: alsa_backend,pulseaudio_backend
           - build_target: linux-arm64
             artifact_type: slim
-            audio_backend: alsa_backend
+            audio_backend: alsa_backend,pulseaudio_backend
           - build_target: linux-armhf
             artifact_type: slim
-            audio_backend: alsa_backend
+            audio_backend: alsa_backend,pulseaudio_backend
           - build_target: linux-armv6
             artifact_type: slim
-            audio_backend: alsa_backend
+            audio_backend: alsa_backend,pulseaudio_backend
 #          - build_target: macos
 #            artifact_type: default
 #            audio_backend: portaudio_backend
@@ -112,11 +112,13 @@ jobs:
           echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ xenial main" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update
           sudo apt-get install -y -qq gcc-aarch64-linux-gnu libc6-arm64-cross=2.23-0ubuntu3cross1 libc6-dev-arm64-cross
-          sudo apt-get download libasound2:arm64 libasound2-dev:arm64 libssl-dev:arm64 libssl1.0.0:arm64
+          sudo apt-get download libasound2:arm64 libasound2-dev:arm64 libssl-dev:arm64 libssl1.0.0:arm64 libpulse0:arm64 libpulse-dev:arm64
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
           sudo dpkg -x libasound2-dev*.deb /build/sysroot/
+          sudo dpkg -x libpulse-dev*.deb /build/sysroot/
+          sudo dpkg -x libpulse0_*.deb /build/sysroot/
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abc" >> $GITHUB_ENV
           echo "RUSTFLAGS=-C linker=aarch64-linux-gnu-gcc -L/usr/aarch64-linux-gnu/lib -L/build/sysroot/usr/lib/aarch64-linux-gnu -L/build/sysroot/lib/aarch64-linux-gnu" >> $GITHUB_ENV
@@ -132,11 +134,13 @@ jobs:
           echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ xenial main" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update
           sudo apt-get install -y -qq gcc-arm-linux-gnueabihf libc6-armhf-cross=2.23-0ubuntu3cross1 libc6-dev-armhf-cross
-          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf
+          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf libpulse0:armhf libpulse-dev:armhf
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
           sudo dpkg -x libasound2-dev*.deb /build/sysroot/
+          sudo dpkg -x libpulse-dev*.deb /build/sysroot/
+          sudo dpkg -x libpulse0_*.deb /build/sysroot/
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abc" >> $GITHUB_ENV
           echo "RUSTFLAGS=-C linker=arm-linux-gnueabihf-gcc -L/usr/arm-linux-gnueabihf/lib -L/build/sysroot/usr/lib/arm-linux-gnueabihf -L/build/sysroot/lib/arm-linux-gnueabihf" >> $GITHUB_ENV
@@ -153,11 +157,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y -qq git
           sudo git -C /build clone --depth=1 https://github.com/raspberrypi/tools.git
-          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf
+          sudo apt-get download libasound2:armhf libasound2-dev:armhf libssl-dev:armhf libssl1.0.0:armhf libpulse0:armhf libpulse-dev:armhf
           sudo dpkg -x libasound2_*.deb /build/sysroot/
           sudo dpkg -x libssl-dev*.deb /build/sysroot/
           sudo dpkg -x libssl1.*.deb /build/sysroot/
           sudo dpkg -x libasound2-dev*.deb /build/sysroot/
+          sudo dpkg -x libpulse-dev*.deb /build/sysroot/
+          sudo dpkg -x libpulse0_*.deb /build/sysroot/
           echo "/build/tools/arm-bcm2708/arm-linux-gnueabihf/bin" >> $GITHUB_PATH
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
           echo "TEST=abcd" >> $GITHUB_ENV
