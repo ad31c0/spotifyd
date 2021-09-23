@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build_target: [macos, linux, linux-arm64, linux-armhf]
+        build_target: [linux-arm64]
         rust: [1.47.0]
         artifact_type: ['slim']  # The build strategy will build all types for each OS specified
         include:
@@ -121,7 +121,6 @@ jobs:
           sudo dpkg -x libpulse-dev*.deb /build/sysroot/
           sudo dpkg -x libpulse0_*.deb /build/sysroot/
           sudo dpkg -x libjson-c2*.deb /build/sysroot/
-          find /build/sysroot/
           sudo cp -r /build/sysroot/lib/* /build/sysroot/usr/lib/
           sudo ln -frs /build/sysroot/lib/aarch64-linux-gnu/libdbus-1.so.3 /build/sysroot/lib/aarch64-linux-gnu/libdbus-1.so
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
@@ -132,8 +131,6 @@ jobs:
           echo "OPENSSL_INCLUDE_DIR=/build/sysroot/usr/include/aarch64-linux-gnu" >> $GITHUB_ENV
           echo "STRIP=aarch64-linux-gnu-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
-          sudo mkdir -p /.cargo
-          echo -e '[target.aarch64-unknown-linux-gnu.slim]\nrustc-link-lib = ["dbus-1", "pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armhf dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armhf'
         run: |
