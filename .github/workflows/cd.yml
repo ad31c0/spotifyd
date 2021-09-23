@@ -128,7 +128,7 @@ jobs:
           echo "STRIP=aarch64-linux-gnu-strip" >> $GITHUB_ENV
           echo "STRIP_OPTS=-s" >> $GITHUB_ENV
           sudo mkdir -p /.cargo
-          echo -e '[target.aarch64-unknown-linux-gnu]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
+          echo -e '[target.aarch64-unknown-linux-gnu.slim]\nrustc-link-lib = ["pulse"]' | sudo tee -a /.cargo/config
       - name: Installing needed Ubuntu armhf dependencies
         if: matrix.os == 'ubuntu-16.04' && matrix.build_target == 'linux-armhf'
         run: |
